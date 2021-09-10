@@ -82,47 +82,6 @@ def salir(update: Update, context: CallbackContext) -> None:
     user_name = update.effective_user['first_name']    
     update.message.reply_text('Gracias <b>{user_name}</b>, por tu visita.', parse_mode="HTML")
     
-def Metrics(matriz_confusion) :    
-    nclases          = matriz_confusion.shape[0]
-    precision        = np.zeros (nclases)    
-    sensitividad     = np.zeros (nclases)             
-    especificidad    = np.zeros (nclases)             
-    tasafalsosPosit  = np.zeros (nclases)
-    F1               = np.zeros (nclases)
-    tsumacols        = matriz_confusion.sum(axis=0)    
-    tsumafilas       = matriz_confusion.sum(axis=1)
-    tsuma            = matriz_confusion.sum()
-    if tsuma <= 0    :
-        raise ValueError('Metrics, la matriz de confusion no tiene datos , por favor revise ')
-    
-    exactitud = 0
-    
-    for i in range(nclases) :
-        if tsumafilas[i] != 0.0 :
-            precision[i]      = round(matriz_confusion[i][i] / tsumafilas[i],4)
-        else:
-            precision[i]      = 0
-            
-        if tsumacols[i] != 0.0 :            
-            sensitividad[i]   = round(matriz_confusion[i][i] / tsumacols [i],4)
-        else:
-            sensitividad[i]   = 0
-            
-        if  (precision[i] + sensitividad[i]) != 0.0 :
-            F1[i]             = round(2*precision[i] * sensitividad[i] / (precision[i] + sensitividad[i]),4)
-        else :
-            F1[i] = 0 
-        
-        FP = tsumafilas[i] - matriz_confusion[i][i]
-        VN = tsuma - (tsumacols[i] + tsumafilas[i] - matriz_confusion[i][i])
-        #print("i=",i,"FP=", FP, "VN=", VN, " Tcol", tsumacols[i], "i,i", matriz_confusion[i][i])          
-        tasafalsosPosit[i]= round(FP / (FP+VN),4)
-        especificidad[i]  = round(1 - tasafalsosPosit[i],4)
-        exactitud         = exactitud  +  matriz_confusion[i][i]
-    exactitud  =  round( exactitud / tsuma, 4)
-    
-    return exactitud, precision   , sensitividad, especificidad, tasafalsosPosit, F1    
-
 
 def ValidarModelo(update: Update, context: CallbackContext) -> None:
     
