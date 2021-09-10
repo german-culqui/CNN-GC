@@ -8,7 +8,7 @@ __license__     = "GPL"
 __version__     = "1.5"
 __description__ = " Bot para telegram, Objetivo realizar pruebas de uso de modelos CNN, para verificacion de firmas manuscritas"
 __email__       = "german.culqui@epn.edu.ec"
-__status__      = "En desarrollo"
+__status__      = "En desarrollo, ultima actualizacion Agosto / 2021"
 
 import logging
 import os
